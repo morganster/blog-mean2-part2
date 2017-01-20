@@ -2,6 +2,7 @@ var Post = require("../models/post");
 
 exports.postPosts = function(req, res) {
     // Set the post properties that came from the POST data
+    console.log(req.body);
     var post = new Post({
         title: req.body.title,
         body: req.body.body,
@@ -19,8 +20,10 @@ exports.postPosts = function(req, res) {
 }
 
 exports.getPosts = function(req, res) {
-    //get all post
-    Post.find().populate('_author').exec(function(err, posts) {
+    //get all post with the basic data of the author
+    Post.find().populate('_author', 'name username').sort([
+        ['create_at', 'descending']
+    ]).exec(function(err, posts) {
         if (err)
             res.send(err);
 
@@ -29,7 +32,7 @@ exports.getPosts = function(req, res) {
 }
 exports.getUserPosts = function(req, res) {
     //get all post
-    Post.find({ '_author': req.user.id }).populate('_author').exec(function(err, posts) {
+    Post.find({ '_author': req.user.id }).populate('_author', 'name').exec(function(err, posts) {
         if (err)
             res.send(err);
 

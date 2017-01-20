@@ -12,9 +12,20 @@ var PostSchema = new Schema({
     _author: {
         type: String,
         ref: 'User'
+    },
+    create_at: {
+        type: Date
     }
 
 
+});
+
+PostSchema.pre('save', function(next) {
+    now = new Date();
+    if (!this.create_at) {
+        this.create_at = now;
+    }
+    next();
 });
 
 module.exports = mongoose.model('Post', PostSchema);

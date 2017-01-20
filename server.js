@@ -30,9 +30,18 @@ app.use('/node_modules', express.static(path.join(__dirname, 'node_modules'))) /
 app.use('/public', express.static(path.join(__dirname, 'public'))) //angular files serving
 app.use(morgan('dev'));
 
+app.use(function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PATCH, DELETE');
+    next();
+});
+
 
 // routes ==================================================
 require('./api/routes')(app); // configure our routes
+
+
 
 // start app ===============================================
 // startup our app at http://localhost:8080

@@ -43,7 +43,7 @@ UserSchema.pre('save', function(next) {
     }
 });
 
-//compare password 
+//compare password
 
 UserSchema.methods.comparePassword = function(pw, bc) {
     bcrypt.compare(pw, this.password, function(err, isMatch) {

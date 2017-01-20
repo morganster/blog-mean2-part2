@@ -48,11 +48,12 @@ exports.login = function(req, res) {
                     var token = jwt.encode(payload, conf.jwtSecret);
                     res.json({ token: token });
                 } else {
-                    res.sendStatus(401);
+                    res.status(500);
                 }
             });
         } else {
-            res.sendStatus(401);
+            res.status(200);
+            res.json({ error: 'Bad Credentials..' });
         }
     });
 };
